@@ -3,7 +3,7 @@ package storage
 import (
 	"database/sql"
 
-	"github.com/Chugerbuller/url-shortening-service/internal/storage/models"
+	"github.com/Chugerbuller/url-shortening-service/internal/models"
 )
 
 type Storage struct {
@@ -16,10 +16,10 @@ func NewStorage(db *sql.DB) *Storage {
 func (s *Storage) Add(url models.Url) error {
 	query := "INSERT INTO urls (url, short_url, created_at, updated_at) VALUES (:url, :short_url, :created_at, :updated_at)"
 	res, err := s.db.Exec(query,
-		sql.Named("url", url.URL),
+		sql.Named("url", url.Url),
 		sql.Named("short_url", url.ShortUrl),
-		sql.Named("address", p.Address),
-		sql.Named("created_at", p.CreatedAt),
+		sql.Named("address", url.CreatedAt),
+		sql.Named("created_at", url.UpdatedAt),
 	)
 	if err != nil {
 		return 0, err
